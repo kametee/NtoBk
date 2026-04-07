@@ -19,7 +19,7 @@ jobs:
 
       - run: pwd
       - run: ls -la
-      - run: npm install -g npm@latest
+      - run: npm install
 
       - run: node sync.js
         env:
