@@ -1,0 +1,27 @@
+name: Notion → Backlog 同期
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'   # 5分おき
+  workflow_dispatch:          # 手動実行ボタン
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - run: node sync.js
+        env:
+          NOTION_TOKEN:        ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID:  ${{ secrets.NOTION_DATABASE_ID }}
+          BACKLOG_API_KEY:     ${{ secrets.BACKLOG_API_KEY }}
+          BACKLOG_SPACE:       ${{ secrets.BACKLOG_SPACE }}
+          BACKLOG_PROJECT_ID:  ${{ secrets.BACKLOG_PROJECT_ID }}
