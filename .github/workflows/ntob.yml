@@ -2,8 +2,8 @@ name: Notion → Backlog 同期
 
 on:
   schedule:
-    - cron: '*/5 * * * *'   # 5分おき
-  workflow_dispatch:          # 手動実行ボタン
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
 
 jobs:
   sync:
@@ -17,6 +17,8 @@ jobs:
 
       - run: pwd
       - run: ls -la
+      - run: npm install -g npm@latest
+
       - run: npm ci
 
       - run: node sync.js
