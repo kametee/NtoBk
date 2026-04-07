@@ -44,7 +44,7 @@ async function createBacklogIssue({ summary, description, dueDate }) {
     projectId: BACKLOG_PROJECT_ID,
     summary,
     description: description ?? '',
-    issueTypeId: '764812', // ← 必須
+    issueTypeId: '12345', // ← 必須
     priorityId: '3',
     ...(dueDate && { dueDate }),
   });
