@@ -14,6 +14,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: ''
+          cache-dependency-path: ''
 
       - run: pwd
       - run: ls -la
