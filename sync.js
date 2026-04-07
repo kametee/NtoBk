@@ -58,10 +58,16 @@ async function createBacklogIssue({ summary, description, dueDate }) {
     `https://${BACKLOG_SPACE}/api/v2/issues?apiKey=${BACKLOG_API_KEY}`,
     { method: 'POST', body }
   );
+
   const data = await res.json();
+
+  if (!res.ok) {
+    console.error('Backlog API Error:', data);
+    throw new Error('Backlog API failed');
+  }
+
   console.log(`Backlog課題作成: #${data.issueKey}`);
   return data.id;
-}
 
 async function updateBacklogIssue(issueId, { summary, description, dueDate }) {
   const body = new URLSearchParams({
