@@ -7,9 +7,14 @@ const BACKLOG_API_KEY = process.env.BACKLOG_API_KEY;
 const BACKLOG_PROJECT_ID = process.env.BACKLOG_PROJECT_ID;
 const NOTION_DB_ID = process.env.NOTION_DATABASE_ID;
 
-// 一旦フィルタ外して全件取得（デバッグ用）
+const since = new Date(Date.now() - 5 * 60 * 1000).toISOString();
+
 const { results } = await notion.databases.query({
   database_id: NOTION_DB_ID,
+  filter: {
+    timestamp: 'last_edited_time',
+    last_edited_time: { on_or_after: since }
+  }
 });
 
 console.log(`対象ページ数: ${results.length}`);
@@ -27,7 +32,8 @@ for (const page of results) {
     props['期日']?.date?.start ?? null;
 
   // 強制的に新規作成（デバッグ用）
-  const existingIssueId = null;
+  const existingIssueId =
+    props['BacklogID']?.number ?? null;
 
   if (existingIssueId) {
     await updateBacklogIssue(existingIssueId, {
