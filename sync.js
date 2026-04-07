@@ -61,6 +61,12 @@ async function createBacklogIssue({ summary, description, dueDate }) {
 
   const data = await res.json();
 
+  console.log('Backlog raw response:', data); // ← 追加
+
+  if (!data.id) {
+    throw new Error('Backlog issue creation failed');
+  }
+
   if (!res.ok) {
     console.error('Backlog API Error:', data);
     throw new Error('Backlog API failed');
